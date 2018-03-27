@@ -1,16 +1,14 @@
-apply from: './dependencies.gradle'
 
 buildscript {
-    apply from: './dependencies.gradle'
 
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
-        classpath 'com.diffplug.spotless:spotless-plugin-gradle:' + versions.spotlessPlugin
-        classpath 'com.novoda:bintray-release:' + versions.bintrayRelease
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.diffplug.spotless:spotless-plugin-gradle:3.6.0'
+        classpath 'com.novoda:bintray-release:0.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
     }
 }
@@ -26,16 +24,7 @@ allprojects {
             maven { url "https://plugins.gradle.org/m2/" }
         }
     }
-    apply plugin: "com.diffplug.gradle.spotless"
-    spotless {
-        java {
-            target "**/*.java"
-            trimTrailingWhitespace()
-            removeUnusedImports()
-            googleJavaFormat()
-            endWithNewline()
-        }
-    }
+
 }
 
 task clean(type: Delete) {
