@@ -1,0 +1,59 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/id_ly_twobtncontra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom|center"
+        >
+
+        <com.afollestad.materialdialogs.internal.MDButton
+            android:id="@+id/md_buttonDefaultNeutral"
+            style="@style/MD_ActionButton.One"
+            android:gravity="center"
+            android:background="@drawable/dialog_btn_confirm"
+            android:textColor="#fff"
+            tools:text="Neutral"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:minWidth="88dp"
+            />
+
+
+        <com.afollestad.materialdialogs.internal.MDButton
+            android:id="@+id/md_buttonDefaultNegative"
+            style="@style/MD_ActionButton.One"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_btn_cancle"
+            tools:layout_alignParentLeft="true"
+            tools:layout_alignParentStart="true"
+            tools:text="取消"
+            android:textColor="#16cacb"
+            />
+
+        <com.afollestad.materialdialogs.internal.MDButton
+            android:id="@+id/md_buttonDefaultPositive"
+            style="@style/MD_ActionButton.One"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_btn_confirm"
+            tools:layout_alignParentEnd="true"
+            tools:layout_alignParentRight="true"
+            tools:text="确认"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+
+</merge>

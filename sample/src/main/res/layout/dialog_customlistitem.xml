@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_ry_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/dialog_item_select_bg"
+    android:layout_margin="10dp"
+    >
+
+    <TextView
+        android:id="@+id/md_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/md_listitem_margin_left"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
+        android:layout_toLeftOf="@+id/md_button"
+        android:layout_toStartOf="@+id/md_button"
+        android:textSize="@dimen/md_listitem_textsize" />
+
+    <CheckBox
+        android:id="@+id/md_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="@dimen/md_dialog_frame_margin"
+        android:layout_marginRight="@dimen/md_dialog_frame_margin"
+        android:layout_marginTop="4dp"
+        android:focusable="false"
+        android:enabled="false"
+        />
+
+</RelativeLayout>
