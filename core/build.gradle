@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply from: '../dependencies.gradle'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.gyymz1993'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -33,10 +33,3 @@ dependencies {
     implementation 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
 }
 
-publish {
-    userOrg = 'novoda'
-    groupId = 'com.afollestad.material-dialogs'
-    artifactId = 'core'
-    publishVersion = versions.publishVersion
-    website = 'https://github.com/afollestad/material-dialogs'
-}
