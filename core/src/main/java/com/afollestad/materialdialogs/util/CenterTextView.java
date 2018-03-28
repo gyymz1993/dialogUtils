@@ -9,7 +9,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-public class CenterTextView extends TextView {
+public class CenterTextView extends android.support.v7.widget.AppCompatTextView {
     private StaticLayout mStaticLayout;
     private TextPaint mTextPaint;
 
