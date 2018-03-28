@@ -500,7 +500,7 @@ class DialogInit {
                         builder.indeterminateProgress && builder.indeterminateIsHorizontalProgress);
                 dialog.progressBar.setProgress(0);
                 dialog.progressBar.setMax(builder.progressMax);
-                dialog.progressLabel = dialog.view.findViewById(R.id.md_label);
+               // dialog.progressLabel = dialog.view.findViewById(R.id.md_label);
                 if (dialog.progressLabel != null) {
                     dialog.progressLabel.setTextColor(builder.contentColor);
                     dialog.setTypeface(dialog.progressLabel, builder.mediumFont);
