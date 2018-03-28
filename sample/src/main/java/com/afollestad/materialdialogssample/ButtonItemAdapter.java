@@ -12,12 +12,14 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Simple adapter example for custom items in the dialog
  */
 class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
 
-    private final CharSequence[] items;
+    private List<String> mItems;
     private ItemCallback itemCallback;
     private ButtonCallback buttonCallback;
     private int mSelectedPos = -1;//实现单选  方法二，变量保存当前选中的position
@@ -32,13 +34,10 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
         this.itemPositionEnabled = itemPositionEnabled;
     }
 
-    ButtonItemAdapter(Context context, @ArrayRes int arrayResId) {
-        this(context.getResources().getTextArray(arrayResId));
+    ButtonItemAdapter(List<String> items) {
+        this.mItems = items;
     }
 
-    private ButtonItemAdapter(CharSequence[] items) {
-        this.items = items;
-    }
 
     void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
         this.itemCallback = itemCallback;
@@ -56,53 +55,74 @@ class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH>
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ButtonVH holder, int position) {
-        holder.title.setText(items[position] + " (" + position + ")");
+        holder.title.setText(mItems.get(position));
         holder.checkBox.setTag(position);
+        if (itemPositionEnabled == mSelectedPos) {
+            //设置默认项
+            new Exception("被禁用项和默认项不能为同一个");
+        }
         holder.checkBox.setChecked(mSelectedPos == position);
-
-//        if (itemPositionEnabled == -1) {
-//            //设置默认项
-//            mSelectedPos = 0;
-//        }
+        holder.checkBox.setSelected(mSelectedPos == position);
         if (itemPositionEnabled == position) {
-            for (int i = 0; i < items.length; i++) {
+            for (int i = 0; i < mItems.size(); i++) {
                 if (i != itemPositionEnabled) {
                     mSelectedPos = i;
                 }
             }
             holder.idRyRootItme.setEnabled(false);
+            holder.checkBox.setEnabled(false);
         }
 
         if (mSelectedPos == position) {
             holder.idRyRootItme.setBackgroundResource(R.drawable.dialog_item_select_bg);
         } else if (itemPositionEnabled == position) {
             holder.idRyRootItme.setBackgroundResource(R.drawable.dialog_item_enabled_bg);
+        } else if (mSelectedPos == position) {
+            //holder.checkBox.setChecked(false);
         } else {
             holder.idRyRootItme.setBackgroundResource(R.drawable.dialog_item_normal_bg);
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.adapter.itemCallback == null) {
-                    return;
-                }
-                if (mSelectedPos==position){
-                    return;
-                }
-                holder.adapter.buttonCallback.onButtonClicked(position);
-                if (mSelectedPos != position) {//当前选中的position和上次选中不是同一个position 执行
-                    holder.checkBox.setChecked(true);
-                    mSelectedPos = position;
-                    notifyDataSetChanged();
-                }
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
+        ItemCheckListener  itemCheckListener=new ItemCheckListener(holder,position);
+        holder.itemView.setOnClickListener(itemCheckListener);
+        holder.checkBox.setOnClickListener(itemCheckListener);
+    }
+
+
+    public class ItemCheckListener implements View.OnClickListener {
+        ButtonVH holder;
+        int position;
+        public  ItemCheckListener (ButtonVH buttonVH,int mposition){
+            this.holder=buttonVH;
+            this.position=mposition;
+        }
+        @Override
+        public void onClick(View v) {
+            if (holder.adapter.itemCallback == null) {
+                return;
+            }
+            if (mSelectedPos == position) {
+                return;
+            }
+            holder.adapter.buttonCallback.onButtonClicked(position);
+            if (mSelectedPos != position) {//当前选中的position和上次选中不是同一个position 执行
+                holder.checkBox.setChecked(true);
+                holder.checkBox.setSelected(true);
+                mSelectedPos = position;
+                notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return mItems.size();
     }
 
     interface ItemCallback {

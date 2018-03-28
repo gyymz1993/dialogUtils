@@ -5,6 +5,7 @@
     android:descendantFocusability="blocksDescendants"
     android:background="@drawable/dialog_item_select_bg"
     android:layout_margin="10dp"
+    android:clickable="true"
     >
 
     <TextView
@@ -30,9 +31,9 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="@dimen/md_dialog_frame_margin"
         android:layout_marginRight="@dimen/md_dialog_frame_margin"
-        android:layout_marginTop="4dp"
-        android:focusable="false"
-        android:enabled="false"
+        android:background="@drawable/collect_checkbox_style"
+        android:layout_margin="10dp"
+        android:button="@null"
         />
 
 </RelativeLayout>

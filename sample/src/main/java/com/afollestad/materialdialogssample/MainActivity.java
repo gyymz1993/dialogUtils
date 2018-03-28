@@ -46,6 +46,8 @@ import com.afollestad.materialdialogs.simplelist.MaterialSimpleListItem;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity
 //        .negativeText(R.string.disagree).contentLineSpacing(1.6f)
 //        .show();
 //        Toast.makeText(getApplication(), "确定", Toast.LENGTH_LONG);
+//
+//
 //        new OneToucDialog.Builder(this)
 //                .title("测试而已")
 //                .content(R.string.shareLocationPrompt)
@@ -146,10 +150,10 @@ public class MainActivity extends AppCompatActivity
 
 
         new OneToucDialog.Builder(this)
-                .title("正在保存")
+                .content("作品生成中"+"\n"+"不可进行操作")
                 .neutralText("取消")
                 .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE)
-                .cancelable(false).setShowLodaing(true).setmWidth(800)
+                .cancelable(false).setShowLodaing(false).setmWidth(800)
                 .show();
 
 
@@ -164,9 +168,15 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.customListItems)
     public void showCustomList() {
-        final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
-        //adapter.setItemPositionEnabled(0);
-        adapter.setmSelectedPos(0);
+
+        //final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
+
+        List<String> mList=new ArrayList<>();
+        mList.add("微信支付");
+        mList.add("秀米支付");
+        final ButtonItemAdapter adapter = new ButtonItemAdapter(mList);
+        adapter.setItemPositionEnabled(0);
+        adapter.setmSelectedPos(1);
         adapter.setCallbacks(new ButtonItemAdapter.ItemCallback() {
             @Override
             public void onItemClicked(int itemIndex) {
