@@ -94,6 +94,25 @@ public class OneToucDialog extends DialogBase
     ListType listType;
     List<Integer> selectedIndicesList;
 
+    public TextView getTvprogress() {
+        return tvprogress;
+    }
+
+
+    @UiThread
+    public void setTvprogress(String tvprogress) {
+        this.tvprogress.setText(tvprogress);
+    }
+
+    public ProgressBar getDownloadProgressBar() {
+        return downloadProgressBar;
+    }
+
+    @UiThread
+    public void setDownloadProgress(int progress) {
+        this.downloadProgressBar.setProgress(progress);
+    }
+
     @SuppressLint("InflateParams")
     protected OneToucDialog(Builder builder) {
         super(builder.context, DialogInit.getTheme(builder));

@@ -1,6 +1,7 @@
 package com.afollestad.materialdialogssample;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -20,19 +20,17 @@ import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.DialogInit;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.OneToucDialog;
 import com.afollestad.materialdialogs.StackingBehavior;
@@ -50,6 +48,9 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity
             thread.interrupt();
         }
     }
-    OneToucDialog oneToucDialog = null;
     @OnClick(R.id.basicNoTitle)
     public void showBasicNoTitle() {
 //    new OneToucDialog.Builder(this)
@@ -163,13 +163,13 @@ public class MainActivity extends AppCompatActivity
                 .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
                 .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
                 .show();
-       // OneToucDialog.startProgressTimer(oneToucDialog);
-        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
-            @Override
-            public void onMackOver() {
-                Log.e("TAG","完成了");
-            }
-        });
+        OneToucDialog.startProgressTimer(oneToucDialog);
+//        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
+//            @Override
+//            public void onMackOver() {
+//                Log.e("TAG","完成了");
+//            }
+//        });
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -194,6 +194,38 @@ public class MainActivity extends AppCompatActivity
 //                .show();
 
     }
+
+
+    /**
+     * 进度条的dialog
+     */
+    OneToucDialog oneToucDialog;
+    public void showNewDialog(){
+        OneToucDialog.Builder builder = new OneToucDialog.Builder(this);
+        int width = WHD()[0] / 3*2;
+        //int height = UIUtils.WHD()[0] / 3;
+        builder.content("正在生成作品"+"\n"+"可能需要X分钟，请耐心等待...");
+        oneToucDialog = builder.neutralText("稍后查看").onNeutral(new OneToucDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(OneToucDialog dialog, DialogAction which) {
+                // OneToucDialog.startQuickProgressTimer(finalOneToucDialog);
+            }
+        }).setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
+                .cancelable(false).setShowDownloadProgress(true).setmWidth(width)
+                .show();
+        oneToucDialog.setDownloadProgress(90);
+        oneToucDialog.setTvprogress("90%");
+       // OneToucDialog.startProgressTimer(oneToucDialog);
+    }
+
+
+    public int[] WHD() {
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        @SuppressLint("WrongConstant") WindowManager mm = (WindowManager)this.getSystemService("window");
+        mm.getDefaultDisplay().getMetrics(outMetrics);
+        return new int[]{outMetrics.widthPixels, outMetrics.heightPixels, (int)outMetrics.density};
+    }
+
 
     @OnClick(R.id.customListItems)
     public void showCustomList() {
@@ -236,13 +268,15 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.basic)
     public void showBasic() {
-        new OneToucDialog.Builder(this)
-                .title(R.string.useGoogleLocationServices)
-                .content(R.string.useGoogleLocationServicesPrompt, true)
-                .positiveText(R.string.agree)
-                .negativeText(R.string.disagree)
-                .show();
+//        new OneToucDialog.Builder(this)
+//                .title(R.string.useGoogleLocationServices)
+//                .content(R.string.useGoogleLocationServicesPrompt, true)
+//                .positiveText(R.string.agree)
+//                .negativeText(R.string.disagree)
+//                .show();
+        showNewDialog();
     }
+
 
     @OnClick(R.id.basicLongContent)
     public void showBasicLongContent() {
