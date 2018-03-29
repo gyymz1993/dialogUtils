@@ -68,6 +68,16 @@ public class OneToucDialog extends DialogBase
     protected TextView title;
     protected TextView content;
 
+
+    /**
+     * 进度条对话框
+     */
+    TextView tvprogress;
+    ProgressBar downloadProgressBar;
+    TextView titleTv;
+     int downloadProgress = 0;
+
+
     EditText input;
     RecyclerView recyclerView;
     View titleFrame;
@@ -586,6 +596,17 @@ public class OneToucDialog extends DialogBase
         return number;
     }
 
+
+    public static void startQuickProgressTimer(OneToucDialog oneToucDialog,DialogInit.OneTouchPorgressOver mOneTouchPorgressOver) {
+        DialogInit.startQuickProgressTimer(oneToucDialog,mOneTouchPorgressOver);
+    }
+
+
+
+    public static void startProgressTimer(OneToucDialog oneToucDialog) {
+        DialogInit.startProgressTimer(oneToucDialog);
+    }
+
     @UiThread
     @Override
     public final void setTitle(CharSequence newTitle) {
@@ -965,6 +986,7 @@ public class OneToucDialog extends DialogBase
         if (input != null) {
             DialogUtils.hideKeyboard(this);
         }
+        DialogInit.cancelProgressTimer();
         super.dismiss();
     }
 
@@ -1061,6 +1083,7 @@ public class OneToucDialog extends DialogBase
 
 
         public static final int ONE_TOUCH_TYPE = 1;
+        public static final int ONE_TOUCH_TYPE_DOWNLOAD = 2;
         protected int type;
         protected double mWidth;
         protected double mHeight;
@@ -1093,7 +1116,11 @@ public class OneToucDialog extends DialogBase
         protected SingleButtonCallback onPositiveCallback;
         protected SingleButtonCallback onNegativeCallback;
         protected SingleButtonCallback onNeutralCallback;
+        protected SingleButtonCallback onProgressOver;
+
+
         protected SingleButtonCallback onAnyCallback;
+
         protected ListCallback listCallback;
         protected ListLongCallback listLongCallback;
         protected ListCallbackSingleChoice listCallbackSingleChoice;
@@ -1169,6 +1196,18 @@ public class OneToucDialog extends DialogBase
 
 
         protected Object tag;
+
+        //设置是否显示自定义进度条
+        protected boolean isShowDownloadProgress;
+
+        public boolean isShowDownloadProgress() {
+            return isShowDownloadProgress;
+        }
+
+        public Builder setShowDownloadProgress(boolean showDownloadProgress) {
+            isShowDownloadProgress = showDownloadProgress;
+            return this;
+        }
 
         public Builder(Context context) {
             this.context = context;
@@ -2001,6 +2040,12 @@ public class OneToucDialog extends DialogBase
             this.onNeutralCallback = callback;
             return this;
         }
+
+        public Builder onProgressOverListener(SingleButtonCallback callback) {
+            this.onProgressOver = callback;
+            return this;
+        }
+
 
         public Builder onAny(SingleButtonCallback callback) {
             this.onAnyCallback = callback;

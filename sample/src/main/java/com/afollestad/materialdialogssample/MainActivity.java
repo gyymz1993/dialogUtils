@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.DialogInit;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.OneToucDialog;
 import com.afollestad.materialdialogs.StackingBehavior;
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             thread.interrupt();
         }
     }
-
+    OneToucDialog oneToucDialog = null;
     @OnClick(R.id.basicNoTitle)
     public void showBasicNoTitle() {
 //    new OneToucDialog.Builder(this)
@@ -149,12 +151,39 @@ public class MainActivity extends AppCompatActivity
 //                .show();
 
 
-        new OneToucDialog.Builder(this)
-                .content("作品生成中"+"\n"+"不可进行操作")
-                .neutralText("取消")
-                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE)
-                .cancelable(false).setShowLodaing(false).setmWidth(800)
+        oneToucDialog = new OneToucDialog.Builder(this)
+                //.content("作品生成中" + "\n" + "不可进行操作")
+                .title("正在保存")
+                .neutralText("取消").onNeutral(new OneToucDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(OneToucDialog dialog, DialogAction which) {
+                       // OneToucDialog.startQuickProgressTimer(finalOneToucDialog);
+                    }
+                })
+                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
+                .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
                 .show();
+       // OneToucDialog.startProgressTimer(oneToucDialog);
+        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
+            @Override
+            public void onMackOver() {
+                Log.e("TAG","完成了");
+            }
+        });
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                SystemClock.sleep(10000);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.e("TAG","SystemClock.sleep(10000)");
+//                        OneToucDialog.startQuickProgressTimer(oneToucDialog);
+//                    }
+//                });
+//            }
+//        }).start();
+
 
 
 //        new OneToucDialog.Builder(this)
@@ -168,7 +197,7 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.customListItems)
     public void showCustomList() {
-
+       // OneToucDialog.startQuickProgressTimer(oneToucDialog);
         //final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
 
         List<String> mList=new ArrayList<>();
