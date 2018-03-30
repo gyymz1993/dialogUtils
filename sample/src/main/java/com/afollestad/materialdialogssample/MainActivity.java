@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity
                 .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
                 .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
                 .show();
-        OneToucDialog.startProgressTimer(oneToucDialog);
+        //OneToucDialog.startProgressTimer(oneToucDialog);
+        OneToucDialog.startOneToucProgressTimer(oneToucDialog,null,0,100,10);
 //        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
 //            @Override
 //            public void onMackOver() {

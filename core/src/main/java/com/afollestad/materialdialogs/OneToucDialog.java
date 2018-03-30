@@ -626,6 +626,18 @@ public class OneToucDialog extends DialogBase
         DialogInit.startProgressTimer(oneToucDialog);
     }
 
+
+    /**
+     *
+     * @param oneToucDialog
+     * @param mOneTouchPorgressOver
+     * @param startProgress  开始进度
+     * @param progress   到某个进度  必须设置
+     * @param speed  设置速率
+     */
+    public static void startOneToucProgressTimer(OneToucDialog oneToucDialog,DialogInit.OneTouchPorgressOver mOneTouchPorgressOver,int startProgress,int progress,int speed) {
+        DialogInit.startOneToucProgressTimer(oneToucDialog,mOneTouchPorgressOver,startProgress,progress,speed);
+    }
     @UiThread
     @Override
     public final void setTitle(CharSequence newTitle) {
