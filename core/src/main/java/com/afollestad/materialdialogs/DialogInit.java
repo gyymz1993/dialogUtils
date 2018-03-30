@@ -702,8 +702,10 @@ public class DialogInit {
     public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int startProgress, int endProgress, int speed) {
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
+        dialog.downloadProgress=startProgress;
         dialog.downloadProgressBar.setProgress(startProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
+        dialog.downloadProgressBar.setMax(100);
         updateProcessTimer = new Timer();
         mProgressTimerTask1 = new ProgressTimerTask1(dialog, endProgress);
         // updateProcessTimer.cancel();
