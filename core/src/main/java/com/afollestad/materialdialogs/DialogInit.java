@@ -730,7 +730,9 @@ public class DialogInit {
                     //   L_.e(progress + "---");
                     dialog.downloadProgressBar.incrementProgressBy(1);
                     dialog.tvprogress.setText(dialog.downloadProgress + "%");
-                    if (endProgress != 100 && dialog.downloadProgress >= endProgress) {
+                    if (dialog.downloadProgress >= endProgress) {
+                        dialog.tvprogress.setText(endProgress + "%");
+                        dialog.downloadProgressBar.setProgress(endProgress);
                         updateProcessTimer.cancel();
                         mProgressTimerTask1.cancel();
                     }
