@@ -699,11 +699,12 @@ public class DialogInit {
      */
     static ProgressTimerTask1 mProgressTimerTask1;
 
-    public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int startProgress, int endProgress, int speed) {
+    public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int endProgress, int speed) {
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
-        dialog.downloadProgress=startProgress;
-        dialog.downloadProgressBar.setProgress(startProgress);
+       // dialog.downloadProgress=startProgress;
+        //dialog.downloadProgressBar.setProgress(startProgress);
+        dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
         dialog.downloadProgressBar.setMax(100);
         updateProcessTimer = new Timer();

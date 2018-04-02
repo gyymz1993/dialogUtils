@@ -75,7 +75,7 @@ public class OneToucDialog extends DialogBase
     TextView tvprogress;
     ProgressBar downloadProgressBar;
     TextView titleTv;
-     int downloadProgress = 0;
+    public int downloadProgress = 0;
 
 
     EditText input;
@@ -636,7 +636,20 @@ public class OneToucDialog extends DialogBase
      * @param speed  设置速率
      */
     public static void startOneToucProgressTimer(OneToucDialog oneToucDialog,DialogInit.OneTouchPorgressOver mOneTouchPorgressOver,int startProgress,int progress,int speed) {
-        DialogInit.startOneToucProgressTimer(oneToucDialog,mOneTouchPorgressOver,startProgress,progress,speed);
+        DialogInit.startOneToucProgressTimer(oneToucDialog,mOneTouchPorgressOver,progress,speed);
+    }
+
+
+    /**
+     *
+     * @param oneToucDialog
+     * @param mOneTouchPorgressOver
+     * @param startProgress  开始进度
+     * @param progress   到某个进度  必须设置
+     * @param speed  设置速率
+     */
+    public static void startOneToucProgressTimer(OneToucDialog oneToucDialog,DialogInit.OneTouchPorgressOver mOneTouchPorgressOver,int progress,int speed) {
+        DialogInit.startOneToucProgressTimer(oneToucDialog,mOneTouchPorgressOver,progress,speed);
     }
     @UiThread
     @Override
