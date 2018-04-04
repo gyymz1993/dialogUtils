@@ -625,18 +625,9 @@ public class OneToucDialog extends DialogBase
     }
 
 
-    public static void startQuickProgressTimer(OneToucDialog oneToucDialog,DialogInit.OneTouchPorgressOver mOneTouchPorgressOver) {
-        DialogInit.startQuickProgressTimer(oneToucDialog,mOneTouchPorgressOver);
-    }
 
 
-
-    public static void startProgressTimer(OneToucDialog oneToucDialog) {
-        DialogInit.startProgressTimer(oneToucDialog);
-    }
-
-
-    /**
+    /*
      *
      * @param oneToucDialog
      * @param mOneTouchPorgressOver
@@ -653,7 +644,6 @@ public class OneToucDialog extends DialogBase
      *
      * @param oneToucDialog
      * @param mOneTouchPorgressOver
-     * @param startProgress  开始进度
      * @param progress   到某个进度  必须设置
      * @param speed  设置速率
      */

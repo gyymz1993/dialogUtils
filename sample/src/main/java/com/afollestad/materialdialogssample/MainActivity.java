@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                 .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
                 .show();
         //OneToucDialog.startProgressTimer(oneToucDialog);
-        OneToucDialog.startOneToucProgressTimer(oneToucDialog,null,50,100);
+        OneToucDialog.startOneToucProgressTimer(oneToucDialog,null,100,100);
 //        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
 //            @Override
 //            public void onMackOver() {

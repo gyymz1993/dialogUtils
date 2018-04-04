@@ -183,7 +183,7 @@ public class DialogInit {
             dialog.downloadProgressBar.setMax(100);
             dialog.downloadProgressBar.setProgress(0);
             dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
-           // setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
+            // setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
 //            int colors[] = { 0xFF19E9E9 , 0xFFAAAAAA, 0xFF129798 };//分别为开始颜色，中间夜色，结束颜色
 //            //GradientDrawable p=new GradientDrawable();
 //            GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
@@ -622,23 +622,8 @@ public class DialogInit {
 
     //进度定时器
     protected static Timer updateProcessTimer;
-
     //定时器任务
     protected static ProgressTimerTask mProgressTimerTask;
-
-    public static void startProgressTimer(final OneToucDialog dialog) {
-        dialog.downloadProgress = 0;
-        dialog.downloadProgressBar.setMax(100);
-        dialog.downloadProgressBar.setProgress(0);
-        //progressBar.setIndeterminate(true);//设置不显示明确的进度
-        dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
-        setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
-        updateProcessTimer = new Timer();
-        mProgressTimerTask = new ProgressTimerTask(dialog);
-        // 6.66秒100/100
-        updateProcessTimer.schedule(mProgressTimerTask, 0, 67);
-    }
-
 
     public static void cancelProgressTimer() {
         if (updateProcessTimer != null) {
@@ -650,24 +635,6 @@ public class DialogInit {
     }
 
 
-    /**
-     * 数据加载成功后快速跑
-     */
-    public static void startQuickProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver) {
-        oneTouchPorgressOver = mOneTouchPorgressOver;
-        dialog.downloadProgress = 81;
-        dialog.downloadProgressBar.setMax(100);
-        dialog.downloadProgressBar.setProgress(81);
-        //progressBar.setIndeterminate(true);//设置不显示明确的进度
-        dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
-       //
-        // setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
-        updateProcessTimer = new Timer();
-        mProgressTimerTask = new ProgressTimerTask(dialog);
-        // updateProcessTimer.cancel();
-        updateProcessTimer.schedule(mProgressTimerTask, 0, 30);
-    }
-
     public static OneTouchPorgressOver oneTouchPorgressOver;
 
     public interface OneTouchPorgressOver {
@@ -675,80 +642,31 @@ public class DialogInit {
     }
 
 
-    private static class ProgressTimerTask extends TimerTask {
-        OneToucDialog dialog;
-
-        public ProgressTimerTask(OneToucDialog mDialog) {
-            this.dialog = mDialog;
-        }
-
-        @Override
-        public void run() {
-            dialog.getView().post(new Runnable() {
-                @Override
-                public void run() {
-                    //   L_.e(progress + "---");
-                    dialog.downloadProgressBar.incrementProgressBy(1);
-                    if (dialog.downloadProgress < 80) {
-                        dialog.downloadProgress++;
-                        dialog.tvprogress.setText(dialog.downloadProgress + "%");
-                    } else if (dialog.downloadProgress == 80) {
-                        dialog.tvprogress.setText(80 + "%");
-                        // dialog.downloadProgressBar.incrementProgressBy(80);
-                        int max = 90;
-                        int min = 81;
-                        Random random = new Random();
-                        int s = random.nextInt(max) % (max - min + 1) + min;
-                        dialog.downloadProgressBar.setProgress(s);
-                        //dialog.downloadProgressBar.incrementSecondaryProgressBy(-5);
-                        //updateProcessTimer.cancel();
-                        // mProgressTimerTask.cancel();
-                        //startQuickProgressTimer(dialog);
-                    } else if (dialog.downloadProgress >= 100) {
-                        dialog.tvprogress.setText(100 + "%");
-                        updateProcessTimer.cancel();
-                        mProgressTimerTask.cancel();
-                        dialog.dismiss();
-                        if (oneTouchPorgressOver != null) {
-                            oneTouchPorgressOver.onMackOver();
-                            oneTouchPorgressOver = null;
-                        }
-                    } else {
-
-                        dialog.downloadProgress++;
-                        dialog.tvprogress.setText(dialog.downloadProgress + "%");
-                    }
-                }
-            });
-        }
-    }
-
-
     /**
+     * 走到某个进度停止
      * 数据加载成功后快速跑
      */
-    static ProgressTimerTask1 mProgressTimerTask1;
 
     public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int endProgress, int speed) {
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
-       // dialog.downloadProgress=startProgress;
+        // dialog.downloadProgress=startProgress;
         //dialog.downloadProgressBar.setProgress(startProgress);
         dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
         dialog.downloadProgressBar.setMax(100);
         //setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
-        mProgressTimerTask1 = new ProgressTimerTask1(dialog, endProgress);
+        mProgressTimerTask = new ProgressTimerTask(dialog, endProgress);
         // updateProcessTimer.cancel();
-        updateProcessTimer.schedule(mProgressTimerTask1, 0, speed);
+        updateProcessTimer.schedule(mProgressTimerTask, 0, speed);
     }
 
-    private static class ProgressTimerTask1 extends TimerTask {
+    private static class ProgressTimerTask extends TimerTask {
         public OneToucDialog dialog;
         public int endProgress;
 
-        public ProgressTimerTask1(OneToucDialog mDialog, int mProgress) {
+        public ProgressTimerTask(OneToucDialog mDialog, int mProgress) {
             this.dialog = mDialog;
             this.endProgress = mProgress;
         }
@@ -758,27 +676,25 @@ public class DialogInit {
             dialog.getView().post(new Runnable() {
                 @Override
                 public void run() {
-                    //   L_.e(progress + "---");
-                    dialog.downloadProgressBar.incrementProgressBy(1);
-                    dialog.tvprogress.setText(dialog.downloadProgress + "%");
-                    if (dialog.downloadProgress >= endProgress) {
-                        dialog.downloadProgress=endProgress;
-                        dialog.tvprogress.setText(endProgress + "%");
-                        dialog.downloadProgressBar.setProgress(endProgress);
-                        updateProcessTimer.cancel();
-                        mProgressTimerTask1.cancel();
-                    }
                     if (dialog.downloadProgress > 100) {
                         dialog.tvprogress.setText(100 + "%");
-                        updateProcessTimer.cancel();
-                        mProgressTimerTask1.cancel();
+                        cancelProgressTimer();
+                        dialog.dismiss();
                         if (oneTouchPorgressOver != null) {
                             oneTouchPorgressOver.onMackOver();
                             oneTouchPorgressOver = null;
                         }
-                        dialog.dismiss();
+                    } else if (dialog.downloadProgress >= endProgress && endProgress < 100) {
+                        dialog.downloadProgress = endProgress;
+                        dialog.tvprogress.setText(endProgress + "%");
+                        dialog.downloadProgressBar.setProgress(endProgress);
+                        cancelProgressTimer();
+                    } else {
+                        dialog.downloadProgressBar.incrementProgressBy(1);
+                        dialog.tvprogress.setText(dialog.downloadProgress + "%");
+                        dialog.downloadProgress++;
                     }
-                    dialog.downloadProgress++;
+
                 }
             });
         }
@@ -789,7 +705,7 @@ public class DialogInit {
     public static void setProgressDrawable(@NonNull ProgressBar bar, @DrawableRes int resId) {
         Drawable layerDrawable = bar.getResources().getDrawable(resId);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            Drawable d = getMethod("tileify", bar, new Object[] { layerDrawable, false });
+            Drawable d = getMethod("tileify", bar, new Object[]{layerDrawable, false});
             bar.setProgressDrawable(d);
         } else {
             bar.setProgressDrawableTiled(layerDrawable);
