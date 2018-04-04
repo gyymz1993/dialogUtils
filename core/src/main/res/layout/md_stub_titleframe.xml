@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:gravity="center"
     android:layout_gravity="center_horizontal"
+    android:layout_marginTop="5dp"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/md_content_padding_bottom"
+    android:paddingBottom="3dp"
     android:paddingLeft="@dimen/md_content_padding_bottom"
     android:paddingRight="@dimen/md_content_padding_bottom"
     android:paddingTop="@dimen/md_content_padding_bottom">
@@ -19,16 +20,14 @@
         android:layout_marginEnd="@dimen/md_icon_margin"
         android:layout_marginRight="@dimen/md_icon_margin"
         android:scaleType="fitXY"
-        tools:ignore="ContentDescription"
-        />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/md_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="@dimen/md_title_textsize"
-        tools:text="Title"
-        />
+        android:textSize="15sp"
+        tools:text="Title" />
 
 </LinearLayout>

@@ -20,6 +20,7 @@ import android.support.annotation.UiThread;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -465,6 +466,11 @@ public class DialogInit {
         // Min height and max width calculations
         WindowManager wm = dialog.getWindow().getWindowManager();
         Display display = wm.getDefaultDisplay();
+
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        int widthPixels = outMetrics.widthPixels;
+
         Point size = new Point();
         display.getSize(size);
         final int windowWidth = size.x;
@@ -478,8 +484,9 @@ public class DialogInit {
         if (builder.getmWidth() != 0) {
             maxWidth = (int) builder.getmWidth();
         } else {
-            maxWidth =
-                    builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
+            //maxWidth = builder.context.getResources().getDimensionPixelSize(R.dimen.md_dialog_max_width);
+            maxWidth = widthPixels / 100 * 65;
+
         }
         int maxHeight = 0;
         if (builder.getmHeight() != 0) {
@@ -497,6 +504,7 @@ public class DialogInit {
         }
         dialog.getWindow().setAttributes(lp);
     }
+
 
     private static void fixCanvasScalingWhenHardwareAccelerated(ProgressBar pb) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -650,7 +658,7 @@ public class DialogInit {
 
     @SuppressLint("LongLogTag")
     public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int endProgress, int speed) {
-       // cancelProgressTimer();
+        // cancelProgressTimer();
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
         // dialog.downloadProgress=startProgress;
@@ -658,7 +666,7 @@ public class DialogInit {
         dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
         dialog.downloadProgressBar.setMax(100);
-        Log.e("ProgressTimerTask----endProgress",endProgress+"" );
+        Log.e("ProgressTimerTask----endProgress", endProgress + "");
         //setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
         mProgressTimerTask = new ProgressTimerTask(dialog, endProgress);
@@ -681,8 +689,8 @@ public class DialogInit {
                 @SuppressLint("LongLogTag")
                 @Override
                 public void run() {
-                    Log.e("ProgressTimerTask--dialog.downloadProgress--",dialog.downloadProgress+"" );
-                    Log.e("ProgressTimerTask----endProgress",endProgress+"" );
+                    Log.e("ProgressTimerTask--dialog.downloadProgress--", dialog.downloadProgress + "");
+                    Log.e("ProgressTimerTask----endProgress", endProgress + "");
                     if (dialog.downloadProgress > 100) {
                         dialog.tvprogress.setText(100 + "%");
                         cancelProgressTimer();
