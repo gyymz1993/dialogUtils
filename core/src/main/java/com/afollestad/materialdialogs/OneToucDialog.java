@@ -72,8 +72,8 @@ public class OneToucDialog extends DialogBase
     /**
      * 进度条对话框
      */
-    TextView tvprogress;
-    ProgressBar downloadProgressBar;
+    public TextView tvprogress;
+    public ProgressBar downloadProgressBar;
     TextView titleTv;
     public int downloadProgress = 0;
 

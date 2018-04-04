@@ -650,7 +650,7 @@ public class DialogInit {
 
     @SuppressLint("LongLogTag")
     public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int endProgress, int speed) {
-        cancelProgressTimer();
+       // cancelProgressTimer();
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
         // dialog.downloadProgress=startProgress;
@@ -693,7 +693,7 @@ public class DialogInit {
                         }
                     } else if (dialog.downloadProgress >= endProgress && endProgress < 100) {
                         dialog.tvprogress.setText(endProgress + "%");
-                        dialog.downloadProgressBar.setProgress(endProgress);
+                        dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
                         cancelProgressTimer();
                     } else {
                         dialog.downloadProgressBar.incrementProgressBy(1);
