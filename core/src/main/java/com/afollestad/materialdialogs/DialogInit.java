@@ -20,6 +20,7 @@ import android.support.annotation.UiThread;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -674,8 +675,11 @@ public class DialogInit {
         @Override
         public void run() {
             dialog.getView().post(new Runnable() {
+                @SuppressLint("LongLogTag")
                 @Override
                 public void run() {
+                    Log.e("ProgressTimerTask--dialog.downloadProgress--",dialog.downloadProgress+"" );
+                    Log.e("ProgressTimerTask----endProgress",endProgress+"" );
                     if (dialog.downloadProgress > 100) {
                         dialog.tvprogress.setText(100 + "%");
                         cancelProgressTimer();
