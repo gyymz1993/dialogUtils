@@ -648,7 +648,9 @@ public class DialogInit {
      * 数据加载成功后快速跑
      */
 
+    @SuppressLint("LongLogTag")
     public static void startOneToucProgressTimer(final OneToucDialog dialog, OneTouchPorgressOver mOneTouchPorgressOver, int endProgress, int speed) {
+        cancelProgressTimer();
         oneTouchPorgressOver = mOneTouchPorgressOver;
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
         // dialog.downloadProgress=startProgress;
@@ -656,6 +658,7 @@ public class DialogInit {
         dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
         dialog.downloadProgressBar.setMax(100);
+        Log.e("ProgressTimerTask----endProgress",endProgress+"" );
         //setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
         mProgressTimerTask = new ProgressTimerTask(dialog, endProgress);
@@ -689,7 +692,6 @@ public class DialogInit {
                             oneTouchPorgressOver = null;
                         }
                     } else if (dialog.downloadProgress >= endProgress && endProgress < 100) {
-                        dialog.downloadProgress = endProgress;
                         dialog.tvprogress.setText(endProgress + "%");
                         dialog.downloadProgressBar.setProgress(endProgress);
                         cancelProgressTimer();
