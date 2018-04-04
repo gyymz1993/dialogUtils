@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@android:id/background"
-        android:drawable="@drawable/me_progress_icon" />
-    <item android:id="@android:id/secondaryProgress">
+
+    <item android:id="@android:id/background"
+        android:drawable="@drawable/progress_icon"
+        >
+        <shape>
+            <corners android:radius="5dip" />
+            <gradient
+                android:startColor="#FF19E9E9"
+                android:centerColor="#FF19E9E9"
+                android:centerY="0.75"
+                android:endColor="#FF19E9E9"
+                android:angle="270"
+                />
+        </shape>
+    </item>
+
+
+    <item android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/me_progress_bg"
+        >
         <clip>
             <shape>
-                <solid android:color="@android:color/transparent" />
-                <size android:height="3dp" />
-                <corners android:radius="1.5dp" />
+                <corners android:radius="5dip" />
+                <gradient
+                    android:startColor="#FF19E9E9"
+                    android:centerY="0.75"
+                    android:endColor="#FF167979"
+                    android:angle="45"
+                    android:type="linear"
+                    />
             </shape>
         </clip>
     </item>
-    <item
-        android:id="@android:id/progress"
-        android:drawable="@drawable/me_progress_bg" >
+
+
+    <item android:id="@android:id/progress"
+        android:drawable="@drawable/me_progress_bg"
+        >
         <clip>
             <shape>
-                <solid android:color="@android:color/transparent" />
-                <corners android:radius="1.5dp" />
+                <corners android:radius="5dip"
+                    />
+                <gradient
+                    android:startColor="#FF19E9E9"
+                    android:centerY="0.75"
+                    android:endColor="#FF167979"
+                    android:angle="45"
+                    android:type="linear"
+                    />
             </shape>
         </clip>
     </item>
+
+
 </layer-list>

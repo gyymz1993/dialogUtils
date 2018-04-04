@@ -122,6 +122,15 @@ public class OneToucDialog extends DialogBase
         view = (MDRootLayout) inflater.inflate(DialogInit.getInflateLayout(builder), null);
         DialogInit.init(this);
 
+        //WindowManager.LayoutParams lp=getWindow().getAttributes();
+
+        /**
+         *  设置背景模糊     模糊度
+         */
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+//        getWindow().setAttributes(lp);
+//        lp.alpha=0.5f;//透明度，黑暗度为lp.dimAmount=1.0f;
+
         // Don't keep a Context reference in the Builder after this point
         builder.context = null;
     }

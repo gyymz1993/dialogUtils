@@ -1,17 +1,27 @@
 package com.afollestad.materialdialogs;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Point;
+import android.graphics.Shader;
+import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.annotation.UiThread;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,6 +37,7 @@ import com.afollestad.materialdialogs.internal.MDRootLayout;
 import com.afollestad.materialdialogs.internal.MDTintHelper;
 import com.afollestad.materialdialogs.util.DialogUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -86,6 +97,7 @@ public class DialogInit {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @SuppressWarnings("ConstantConditions")
     @UiThread
     static void init(final OneToucDialog dialog) {
@@ -170,8 +182,23 @@ public class DialogInit {
             dialog.downloadProgress = 0;
             dialog.downloadProgressBar.setMax(100);
             dialog.downloadProgressBar.setProgress(0);
-            //progressBar.setIndeterminate(true);//设置不显示明确的进度
             dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
+           // setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
+//            int colors[] = { 0xFF19E9E9 , 0xFFAAAAAA, 0xFF129798 };//分别为开始颜色，中间夜色，结束颜色
+//            //GradientDrawable p=new GradientDrawable();
+//            GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+//            gradientDrawable.setCornerRadius(45);
+//            //p.setColor(Color.rgb(25, 233, 233));
+//            gradientDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+//           // LinearGradient gradient = new LinearGradient(0, 0, 100, 100, Color.RED, Color.YELLOW, Shader.TileMode.MIRROR);
+//            // linear-gradient(40deg, #99CC33, #FF6666,#336699,#FF0033);
+//            ClipDrawable progress = new ClipDrawable(gradientDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+//            GradientDrawable background = new GradientDrawable();
+//            background.setColor(Color.rgb(25, 233, 233));
+//            background.setCornerRadius(10);
+//            LayerDrawable pd=new LayerDrawable(new Drawable[]{background,progress});
+//            dialog.downloadProgressBar.setProgressDrawable(pd);
+
             //startProgressTimer(dialog);
         }
 
@@ -605,6 +632,7 @@ public class DialogInit {
         dialog.downloadProgressBar.setProgress(0);
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
+        setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
         mProgressTimerTask = new ProgressTimerTask(dialog);
         // 6.66秒100/100
@@ -632,6 +660,8 @@ public class DialogInit {
         dialog.downloadProgressBar.setProgress(81);
         //progressBar.setIndeterminate(true);//设置不显示明确的进度
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
+       //
+        // setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
         mProgressTimerTask = new ProgressTimerTask(dialog);
         // updateProcessTimer.cancel();
@@ -707,6 +737,7 @@ public class DialogInit {
         dialog.downloadProgressBar.setProgress(dialog.downloadProgress);
         dialog.downloadProgressBar.setIndeterminate(false);// 设置显示明确的进度
         dialog.downloadProgressBar.setMax(100);
+        //setProgressDrawable(dialog.downloadProgressBar, R.drawable.progress_style);
         updateProcessTimer = new Timer();
         mProgressTimerTask1 = new ProgressTimerTask1(dialog, endProgress);
         // updateProcessTimer.cancel();
@@ -731,6 +762,7 @@ public class DialogInit {
                     dialog.downloadProgressBar.incrementProgressBy(1);
                     dialog.tvprogress.setText(dialog.downloadProgress + "%");
                     if (dialog.downloadProgress >= endProgress) {
+                        dialog.downloadProgress=endProgress;
                         dialog.tvprogress.setText(endProgress + "%");
                         dialog.downloadProgressBar.setProgress(endProgress);
                         updateProcessTimer.cancel();
@@ -750,6 +782,34 @@ public class DialogInit {
                 }
             });
         }
+    }
+
+
+    @SuppressLint("NewApi")
+    public static void setProgressDrawable(@NonNull ProgressBar bar, @DrawableRes int resId) {
+        Drawable layerDrawable = bar.getResources().getDrawable(resId);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            Drawable d = getMethod("tileify", bar, new Object[] { layerDrawable, false });
+            bar.setProgressDrawable(d);
+        } else {
+            bar.setProgressDrawableTiled(layerDrawable);
+        }
+    }
+
+    private static Drawable getMethod(String methodName, Object o, Object[] paras) {
+        Drawable newDrawable = null;
+        try {
+            Class<?> c[] = new Class[2];
+            c[0] = Drawable.class;
+            c[1] = boolean.class;
+            Method method = ProgressBar.class.getDeclaredMethod(methodName, c);
+            method.setAccessible(true);
+            newDrawable = (Drawable) method.invoke(o, paras);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return newDrawable;
     }
 
 }

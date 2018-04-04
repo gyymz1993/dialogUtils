@@ -68,4 +68,17 @@
     <item name="android:paddingRight">@dimen/md_button_textpadding_horizontal</item>
   </style>
 
+
+  <style name="edit_AlertDialog_style" parent="@android:style/Theme.Dialog">
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowNoTitle">true</item>
+    <!-- 是否启用标题栏 -->
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowBackground">@drawable/transpant_bg</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <!-- 是否使用背景半透明 -->
+  </style>
+
 </resources>

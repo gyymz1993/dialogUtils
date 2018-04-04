@@ -3,11 +3,14 @@
   android:id="@+id/md_root"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:orientation="vertical">
+  android:orientation="vertical"
+    android:background="@drawable/transpant_bg"
+    >
 
   <include layout="@layout/md_stub_titleframe"/>
 
   <FrameLayout
+      android:background="@drawable/transpant_bg"
     android:id="@+id/md_customViewFrame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>

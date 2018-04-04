@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         handler = new Handler();
-        primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
-        accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
+       // primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
+      //  accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
     }
 
     @Override
@@ -275,7 +275,14 @@ public class MainActivity extends AppCompatActivity
 //                .positiveText(R.string.agree)
 //                .negativeText(R.string.disagree)
 //                .show();
-        showNewDialog();
+       // showNewDialog();
+
+        new OneToucDialog.Builder(this)
+                .customView(R.layout.custom_vip_dialog,false)
+                .setmWidth(500)
+                .setmHeight(500)
+                .show();
+
     }
 
 
