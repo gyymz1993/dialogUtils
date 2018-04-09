@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         handler = new Handler();
-       // primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
-      //  accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
+        // primaryPreselect = DialogUtils.resolveColor(this, R.attr.colorPrimary);
+        //  accentPreselect = DialogUtils.resolveColor(this, R.attr.colorAccent);
     }
 
     @Override
@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             thread.interrupt();
         }
     }
+
     @OnClick(R.id.basicNoTitle)
     public void showBasicNoTitle() {
 //    new OneToucDialog.Builder(this)
@@ -131,40 +132,37 @@ public class MainActivity extends AppCompatActivity
 //        Toast.makeText(getApplication(), "确定", Toast.LENGTH_LONG);
 //
 //
-//        new OneToucDialog.Builder(this)
-//                .title("测试而已")
-//                .content(R.string.shareLocationPrompt)
-//                .positiveText("确定").onPositive(new OneToucDialog.SingleButtonCallback() {
-//            @Override
-//            public void onClick(OneToucDialog dialog, DialogAction which) {
-//                Log.e("TAH", "点击确定");
-//            }
-//        })
-//                .negativeText("取消").onNegative(new OneToucDialog.SingleButtonCallback() {
-//            @Override
-//            public void onClick(OneToucDialog dialog, DialogAction which) {
-//                Log.e("TAH", "点击确定");
-//            }
-//        })
-//                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE)
-//                .cancelable(false).setmWidth(800)
-//                .show();
-
-
-        oneToucDialog = new OneToucDialog.Builder(this)
-                //.content("作品生成中" + "\n" + "不可进行操作")
-                .title("正在保存")
-                .neutralText("取消").onNeutral(new OneToucDialog.SingleButtonCallback() {
+        OneToucDialog build = new OneToucDialog.Builder(this)
+                .positiveText("确定").onPositive(new OneToucDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(OneToucDialog dialog, DialogAction which) {
-                       // OneToucDialog.startQuickProgressTimer(finalOneToucDialog);
+                        Log.e("TAH", "点击确定");
                     }
                 })
-                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
-                .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
-                .show();
-        //OneToucDialog.startProgressTimer(oneToucDialog);
-        OneToucDialog.startOneToucProgressTimer(oneToucDialog,null,100,100);
+                .negativeText("取消").onNegative(new OneToucDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(OneToucDialog dialog, DialogAction which) {
+                        Log.e("TAH", "点击确定" + passwordInput.getText().toString());
+                    }
+                })
+                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE)
+                .cancelable(false).setShowEdittext(true).setmWidth(800).build();
+        passwordInput = build.editText;
+        build.show();
+//        oneToucDialog = new OneToucDialog.Builder(this)
+//                //.content("作品生成中" + "\n" + "不可进行操作")
+//                .title("正在保存")
+//                .neutralText("取消").onNeutral(new OneToucDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(OneToucDialog dialog, DialogAction which) {
+//                       // OneToucDialog.startQuickProgressTimer(finalOneToucDialog);
+//                    }
+//                })
+//                .setType(OneToucDialog.Builder.ONE_TOUCH_TYPE_DOWNLOAD)
+//                .cancelable(false).setShowDownloadProgress(true).setmWidth(800)
+//                .show();
+//        //OneToucDialog.startProgressTimer(oneToucDialog);
+//        OneToucDialog.startOneToucProgressTimer(oneToucDialog,null,100,100);
 //        OneToucDialog.startQuickProgressTimer(oneToucDialog, new DialogInit.OneTouchPorgressOver() {
 //            @Override
 //            public void onMackOver() {
@@ -186,7 +184,6 @@ public class MainActivity extends AppCompatActivity
 //        }).start();
 
 
-
 //        new OneToucDialog.Builder(this)
 //                .content(R.string.shareLocationPrompt)
 //                .neutralText("确定")
@@ -201,11 +198,12 @@ public class MainActivity extends AppCompatActivity
      * 进度条的dialog
      */
     OneToucDialog oneToucDialog;
-    public void showNewDialog(){
+
+    public void showNewDialog() {
         OneToucDialog.Builder builder = new OneToucDialog.Builder(this);
-        int width = WHD()[0] / 3*2;
+        int width = WHD()[0] / 3 * 2;
         //int height = UIUtils.WHD()[0] / 3;
-        builder.content("正在生成作品"+"\n"+"可能需要X分钟，请耐心等待...");
+        builder.content("正在生成作品" + "\n" + "可能需要X分钟，请耐心等待...");
         oneToucDialog = builder.neutralText("稍后查看").onNeutral(new OneToucDialog.SingleButtonCallback() {
             @Override
             public void onClick(OneToucDialog dialog, DialogAction which) {
@@ -216,24 +214,24 @@ public class MainActivity extends AppCompatActivity
                 .show();
         oneToucDialog.setDownloadProgress(90);
         oneToucDialog.setTvprogress("90%");
-       // OneToucDialog.startProgressTimer(oneToucDialog);
+        // OneToucDialog.startProgressTimer(oneToucDialog);
     }
 
 
     public int[] WHD() {
         DisplayMetrics outMetrics = new DisplayMetrics();
-        @SuppressLint("WrongConstant") WindowManager mm = (WindowManager)this.getSystemService("window");
+        @SuppressLint("WrongConstant") WindowManager mm = (WindowManager) this.getSystemService("window");
         mm.getDefaultDisplay().getMetrics(outMetrics);
-        return new int[]{outMetrics.widthPixels, outMetrics.heightPixels, (int)outMetrics.density};
+        return new int[]{outMetrics.widthPixels, outMetrics.heightPixels, (int) outMetrics.density};
     }
 
 
     @OnClick(R.id.customListItems)
     public void showCustomList() {
-       // OneToucDialog.startQuickProgressTimer(oneToucDialog);
+        // OneToucDialog.startQuickProgressTimer(oneToucDialog);
         //final ButtonItemAdapter adapter = new ButtonItemAdapter(this, R.array.socialNetworks);
 
-        List<String> mList=new ArrayList<>();
+        List<String> mList = new ArrayList<>();
         mList.add("微信支付");
         mList.add("秀米支付");
         final ButtonItemAdapter adapter = new ButtonItemAdapter(mList);
@@ -275,10 +273,10 @@ public class MainActivity extends AppCompatActivity
 //                .positiveText(R.string.agree)
 //                .negativeText(R.string.disagree)
 //                .show();
-       // showNewDialog();
+        // showNewDialog();
 
         new OneToucDialog.Builder(this)
-                .customView(R.layout.custom_vip_dialog,false)
+                .customView(R.layout.custom_vip_dialog, false)
                 .setmWidth(500)
                 .setmHeight(500)
                 .show();

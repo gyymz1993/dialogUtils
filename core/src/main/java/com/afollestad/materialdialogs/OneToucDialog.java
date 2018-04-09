@@ -41,6 +41,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.internal.MDButton;
@@ -67,6 +68,8 @@ public class OneToucDialog extends DialogBase
     protected ImageView icon;
     protected TextView title;
     protected TextView content;
+    protected RelativeLayout editRel;
+    public EditText editText;
 
 
     /**
@@ -1242,6 +1245,17 @@ public class OneToucDialog extends DialogBase
 
         //设置是否显示自定义进度条
         protected boolean isShowDownloadProgress;
+        //设置是都显示自定义输入文字框
+        protected boolean isShowEdittext;
+
+        public boolean isShowEdittext() {
+            return isShowEdittext;
+        }
+
+        public Builder setShowEdittext(boolean showEdittext) {
+            isShowEdittext = showEdittext;
+            return this;
+        }
 
         public boolean isShowDownloadProgress() {
             return isShowDownloadProgress;

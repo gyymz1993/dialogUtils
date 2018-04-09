@@ -179,6 +179,14 @@ public class DialogInit {
         dialog.tvprogress = dialog.view.findViewById(R.id.id_pro_gress_tv);
         dialog.downloadProgressBar = dialog.view.findViewById(R.id.id_pro_gress);
 
+
+        dialog.editRel = dialog.view.findViewById(R.id.id_ed_ly);
+        dialog.editText = dialog.view.findViewById(R.id.id_ed_content);
+
+        if (builder.isShowEdittext){
+            dialog.editRel.setVisibility(View.VISIBLE);
+        }
+
         //显示自定义进度
         if (builder.isShowDownloadProgress) {
             dialog.downloadProgress = 0;
