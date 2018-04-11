@@ -439,14 +439,25 @@ public class OneToucDialog extends DialogBase
                 selectedTitles.toArray(new CharSequence[selectedTitles.size()]));
     }
 
+    // 两次点击按钮之间的点击间隔不能少于1000毫秒
+    public static int MIN_CLICK_DELAY_TIME = 1000;
+    private static long lastClickTime;
+
+
     @Override
     public final void onClick(View v) {
         DialogAction tag = (DialogAction) v.getTag();
+        long curClickTime = System.currentTimeMillis();
         switch (tag) {
             case POSITIVE:
-                if (builder.onPositiveCallback != null) {
-                    builder.onPositiveCallback.onClick(this, tag);
+                if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+                    // 超过点击间隔后再将lastClickTime重置为当前点击时间
+                    lastClickTime = curClickTime;
+                    if (builder.onPositiveCallback != null) {
+                        builder.onPositiveCallback.onClick(this, tag);
+                    }
                 }
+
                 if (!builder.alwaysCallSingleChoiceCallback) {
                     sendSingleChoiceCallback(v);
                 }
@@ -461,24 +472,42 @@ public class OneToucDialog extends DialogBase
                 }
                 break;
             case NEGATIVE:
-                if (builder.onNegativeCallback != null) {
-                    builder.onNegativeCallback.onClick(this, tag);
+                if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+                    // 超过点击间隔后再将lastClickTime重置为当前点击时间
+                    lastClickTime = curClickTime;
+                    if (builder.onPositiveCallback != null) {
+                        builder.onPositiveCallback.onClick(this, tag);
+                    }
+
+                    if (builder.onNegativeCallback != null) {
+                        builder.onNegativeCallback.onClick(this, tag);
+                    }
                 }
                 if (builder.autoDismiss) {
                     cancel();
                 }
                 break;
             case NEUTRAL:
-                if (builder.onNeutralCallback != null) {
-                    builder.onNeutralCallback.onClick(this, tag);
+                if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+                    // 超过点击间隔后再将lastClickTime重置为当前点击时间
+                    lastClickTime = curClickTime;
+                    if (builder.onNeutralCallback != null) {
+                        builder.onNeutralCallback.onClick(this, tag);
+                    }
                 }
+
                 if (builder.autoDismiss) {
                     dismiss();
                 }
                 break;
         }
-        if (builder.onAnyCallback != null) {
-            builder.onAnyCallback.onClick(this, tag);
+
+        if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+            // 超过点击间隔后再将lastClickTime重置为当前点击时间
+            lastClickTime = curClickTime;
+            if (builder.onAnyCallback != null) {
+                builder.onAnyCallback.onClick(this, tag);
+            }
         }
     }
 
