@@ -475,9 +475,9 @@ public class OneToucDialog extends DialogBase
                 if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
                     // 超过点击间隔后再将lastClickTime重置为当前点击时间
                     lastClickTime = curClickTime;
-                    if (builder.onPositiveCallback != null) {
-                        builder.onPositiveCallback.onClick(this, tag);
-                    }
+//                    if (builder.onPositiveCallback != null) {
+//                        builder.onPositiveCallback.onClick(this, tag);
+//                    }
 
                     if (builder.onNegativeCallback != null) {
                         builder.onNegativeCallback.onClick(this, tag);
